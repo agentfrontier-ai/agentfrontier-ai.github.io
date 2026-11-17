@@ -741,6 +741,32 @@ register('af-k', {
       e.preventDefault(); go(a.getAttribute('data-go'), a.getAttribute('data-at'));
     });
 
+    // ---------- contact: the message goes out from the page through a form-forwarding service; nothing is kept here
+    var cform = root.getElementById('cform');
+    if (cform){
+      var cstat = root.getElementById('cstatus'), csent = root.getElementById('csent'), cbtn = cform.querySelector('button[type=submit]'), busy = false;
+      var say = function(msg, err){ cstat.textContent = msg; cstat.classList.toggle('err', !!err); };
+      api.on(cform, 'submit', function(e){
+        e.preventDefault(); if (busy) return;
+        var f = cform.elements, bad = null, val = function(n){ return f[n].value.trim(); };
+        ['name', 'email', 'message'].forEach(function(n){
+          var ok = val(n) !== '' && (n !== 'email' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val(n)));
+          f[n].classList.toggle('bad', !ok); f[n].setAttribute('aria-invalid', ok ? 'false' : 'true'); if (!ok && !bad) bad = n;
+        });
+        if (bad){ say(bad === 'email' ? 'Please enter a valid email address.' : 'Please add your ' + bad + '.', true); f[bad].focus(); return; }
+        if (f.botcheck.checked) return;
+        var key = cform.getAttribute('data-key');
+        if (!key){ say('This form is not connected yet.', true); return; }
+        busy = true; cbtn.disabled = true; say('Sending…');
+        var org = val('organization');
+        fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ access_key: key, subject: 'Agent Frontier: message from ' + val('name') + (org ? ' (' + org + ')' : ''), from_name: 'Agent Frontier website', name: val('name'), email: val('email'), organization: org, message: val('message') }) })
+          .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(d){ if (!r.ok || d.success === false) throw new Error('rejected'); }); })
+          .then(function(){ cform.hidden = true; csent.hidden = false; csent.focus(); })
+          .catch(function(){ busy = false; cbtn.disabled = false; say('Could not send. Please try again, or reach us on Discord.', true); });
+      });
+    }
+
     api.reveal(root.querySelectorAll('[data-rv]'));
   }
 });
