@@ -144,9 +144,9 @@ a.nrow:hover{background:rgba(255,255,255,.7)}
 .post span{margin-top:auto;font-size:15px}
 .from{margin-top:40px;padding-block:30px 36px;border-block:1px solid var(--ink);text-align:center}
 .from .label{letter-spacing:.14em;color:var(--ink)}
-.logos{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:24px 54px;margin-top:28px}
-.logos img{display:block;width:auto;max-width:none;opacity:.86}
-.logos .tw{font:600 23px/1 var(--display);letter-spacing:-.035em;opacity:.86}
+.logos{margin:16px -27px -12px;font-size:0;line-height:0;text-align:center;text-wrap:balance}
+.logos img{display:inline-block;vertical-align:middle;width:auto;max-width:none;margin:12px 27px;opacity:.86}
+.logos .tw{display:inline-block;vertical-align:middle;margin:12px 27px;font:600 23px/1 var(--display);letter-spacing:-.035em;opacity:.86}
 .people{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:44px}
 .person{display:flex;flex-direction:column;gap:18px;min-width:0;padding:22px 24px 24px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.62)}
 .person .top{display:flex;align-items:center;gap:20px;min-width:0}
@@ -252,7 +252,8 @@ footer a:hover{color:var(--ink)}
   .cform,.csent{padding:20px}
   .person img{width:84px;height:84px}
   .person h3{font-size:29px}
-  .logos{gap:20px 34px}
+  .logos{margin:18px -17px -10px}
+  .logos img,.logos .tw{margin:10px 17px}
   .pagehead{padding-block:40px 0}
   .build canvas{height:500px}
   .chart canvas{height:330px}

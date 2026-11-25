@@ -30,6 +30,5 @@ Then open http://localhost:8000/.
 - Blog has no posts yet.
 - X and LinkedIn links are left out until there are accounts to point to.
 - The contact page lists Discord and GitHub; add an email address when there is one.
-- LiveWorldArena and FrontierPro link to their current pages; change the links when their own sites are up.
 
 Avatar illustrations and organisation marks belong to their owners.
